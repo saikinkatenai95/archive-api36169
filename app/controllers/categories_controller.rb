@@ -3,26 +3,32 @@ class CategoriesController < ApplicationController
 
   def index
     @categories = Category.all
-    json_response(@categories)
+    render json: @categories, each_serializer: CategorySerializer, include: [:ideas]
   end
 
   def show
-    json_response(@category)
+    render json: @category
   end
 
   def create
-    @category = Category.create!(categorie_params)
-    json_response(@category, :created)
+    @category = Category.new(category_params)
+    if @category.save
+      render json: { status: 'SUCCESS', data: @category }
+    else
+      render json: { status: 'ERROR', data: @category.errors }
+    end
   end
 
   def update
-    @category.update(categorie_params)
-    head :no_content
+    if @category.update(category_params)
+      render json: @category
+    else
+      render json: @category.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
     @category.destroy
-    head :no_content
   end
 
 
@@ -32,7 +38,7 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
   end
 
-  def categorie_params
-    params.permit(:name)
+  def category_params
+    params.require(:category).permit(:name)
   end
 end
