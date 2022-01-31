@@ -16,7 +16,7 @@ class IdeasController < ApplicationController
     if Category.exists?(name: params[:category][:name])
       idea_body.save
     else
-      render json: @idea
+      render json: @ideas
     end
   end
 
@@ -42,7 +42,7 @@ class IdeasController < ApplicationController
   end
 
   def category_params
-    params.require(:category).permit(:name)
+    params.permit(:name)
   end
 
 end
