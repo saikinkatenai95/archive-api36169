@@ -14,9 +14,10 @@ class IdeasController < ApplicationController
     @category = Category.new(category_params)
     @idea = Idea.new(idea_params)
     if Category.exists?(name: params[:category][:name])
-      idea_body.save
+      logger.debug("if文の中に入りました")
+      # render json: @ideas
     else
-      render json: @ideas
+      idea_body.save
     end
   end
 
@@ -42,7 +43,7 @@ class IdeasController < ApplicationController
   end
 
   def category_params
-    params.permit(:name)
+    params.permit(:category_id,:name)
   end
 
 end
