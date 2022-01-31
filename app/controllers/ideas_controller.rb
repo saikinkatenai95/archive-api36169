@@ -12,12 +12,14 @@ class IdeasController < ApplicationController
 
   def create
     @category = Category.new(category_params)
+    binding.pry
     @idea = Idea.new(idea_params)
     if Category.exists?(name: params[:category][:name])
-      logger.debug("if文の中に入りました")
       # render json: @ideas
-    else
       idea_body.save
+    else
+      @category.save
+      @idea.save
     end
   end
 
