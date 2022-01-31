@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  attr_accessor :name, :category
   before_action :set_categorie, only: [:show, :update, :destroy]
 
   def index
@@ -13,9 +14,9 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      render json: { status: 'SUCCESS', data: @category }
+      render json: { status: 201, data: @category }
     else
-      render json: { status: 'ERROR', data: @category.errors }
+      render json: { status: 422, data: @category.errors }
     end
   end
 

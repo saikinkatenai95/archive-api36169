@@ -12,10 +12,9 @@ class IdeasController < ApplicationController
 
   def create
     @category = Category.new(category_params)
-    binding.pry
     @idea = Idea.new(idea_params)
     if Category.exists?(name: params[:category][:name])
-      # render json: @ideas
+      render json: @ideas
       idea_body.save
     else
       @category.save
@@ -45,7 +44,7 @@ class IdeasController < ApplicationController
   end
 
   def category_params
-    params.permit(:category_id,:name)
+    params.permit(:name)
   end
 
 end
