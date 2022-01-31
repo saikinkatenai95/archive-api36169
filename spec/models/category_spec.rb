@@ -5,7 +5,7 @@ RSpec.describe Category, type: :model do
     @category = FactoryBot.build(:category)
   end
 
-  describe 'カテゴリー新規登録' do
+  describe 'カテゴリー新規登録項目' do
     context '新規登録できるとき'do
       it 'nameが存在かつ重複していなければ登録できる' do
         expect(@category).to be_valid
